@@ -1,134 +1,201 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="description" content="Conversor de temperatura de Celsius, Fahrenheit e Kelvin."/>
-        <title>Conversor De Temperatura</title>
-        <style>
-            form{
-                margin: auto;
-                width: 80%;
-                display: flex;
-                flex-direction: column;
-            }
-            input{
-                margin-block: 5px;
-                outline: none;
-                height: 30px;
-                border: 1px solid #cbcbf1;
-                border-radius: 4px;
-                padding: 5px;
-                font-size: 16px;
-                box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-                margin-bottom: 10px;
-            }
-            input:hover{
-                border-color: red;
-            }
-            input:focus{
-                border-color: #4343e2;
-            }
-            button {
-                background-color: #4CAF50;
-                border: none;
-                color: white;
-                padding: 10px 20px;
-                text-align: center;
-                text-decoration: none;
-                font-size: 16px;
-                border-radius: 5px;
-                box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-                cursor: pointer;
-                margin-top: 10px;
-            }
 
-            button:hover {
-                background-color: #3e8e41;
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Conversor de temperatura de Celsius, Fahrenheit e Kelvin." />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Conversor De Temperatura</title>
+    <style>
+        form {
+            margin: auto;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 120px;
+        }
+
+        input {
+            margin-block: 5px;
+            outline: none;
+            height: 30px;
+            border: 1px solid #cbcbf1;
+            border-radius: 4px;
+            padding: 5px;
+            font-size: 16px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        input:hover {
+            border-color: red;
+        }
+
+        input:focus {
+            border-color: #4343e2;
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        button:active {
+            background-color: rgb(20, 24, 21);
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+
+        p {
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #252323;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="myid">Conversor de Temperatura</h1>
+    <form>
+        <label for="c">Graus Celsius</label>
+        <input id="c" inputmode="numeric" placeholder="Digite a temperatura em Graus Celsius" name="c" />
+        <label for="f">Grau Fahrenheit</label>
+        <input id="f" inputmode="numeric" placeholder="Digite a temperatura em Graus Fahrenheit" name="f" />
+        <label for="k">Kelvin</label>
+        <input id="k" inputmode="numeric" placeholder="Digite a temperatura em Kelvin" name="k" />
+        <button id="limpar" aria-label="Limpar campos">Limpar</button>
+    </form>
+    <div style="text-align: center;">
+        <p>Github: <span><a target="_blank"
+                    href="https://github.com/gabriel-logan/Conversor-De-Temperatura">Repositório</a></span></p>
+        <q>By Gabriel Logan</q>
+    </div>
+    <script>
+        const c = document.querySelector("#c");
+        const f = document.querySelector("#f");
+        const k = document.querySelector("#k");
+        const clean = document.querySelector("#limpar");
+
+        const languageCode = navigator.language || navigator.userLanguage;
+
+        // Função para converter de Celsius para Fahrenheit e Kelvin
+        function convertFromCelsius() {
+            if (c.value === "") {
+                f.value = "";
+                k.value = "";
+                return;
             }
-            button:active{
-                background-color: rgb(20, 24, 21);
+            const celsius = parseFloat(c.value.replace(",", "."));
+
+            if (isNaN(celsius)) {
+                f.value = "";
+                k.value = "";
+            } else {
+                const cToF = (celsius * 9 / 5) + 32;
+                const cToK = celsius + 273.15;
+
+                f.value = cToF.toLocaleString(languageCode, {
+                    maximumFractionDigits: 2
+                });
+                k.value = cToK.toLocaleString(languageCode, {
+                    maximumFractionDigits: 2
+                });
             }
-            h1 {
-                font-size: 36px;
-                font-weight: bold;
-                text-align: center;
-                margin-top: 30px;
-                margin-bottom: 30px;
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-                color: #333;
+        }
+
+        // Função para converter de Fahrenheit para Celsius e Kelvin
+        function convertFromFahrenheit() {
+            if (f.value === "") {
+                c.value = "";
+                k.value = "";
+                return;
             }
+            const fahrenheit = parseFloat(f.value.replace(",", "."));
 
-            p {
-                text-align: center;
-                font-size: 16px;
-                line-height: 1.5;
-                color: #252323;
-                margin-top: 20px;
-                margin-bottom: 20px;
+            if (isNaN(fahrenheit)) {
+                c.value = "";
+                k.value = "";
+            } else {
+                const fToC = ((fahrenheit - 32) * 5 / 9);
+                const fToK = ((fahrenheit - 32) * 5 / 9) + 273.15;
+
+                c.value = fToC.toLocaleString(languageCode, {
+                    maximumFractionDigits: 2
+                });
+                k.value = fToK.toLocaleString(languageCode, {
+                    maximumFractionDigits: 2
+                });
             }
+        }
 
-        </style>
-    </head>
-    <body>
-        <h1 id="myid">Conversor de Temperatura</h1>
-        <form>
-            <label for="c">Graus Celsius</label>
-            <input id="c" inputmode="numeric" placeholder="Digite a temperatura em Graus Celsius" name="c"/>
-            <label for="f">Grau Fahrenheit</label>
-            <input id="f" inputmode="numeric" placeholder="Digite a temperatura em Graus Fahrenheit" name="f"/>
-            <label for="k">Kelvin</label>
-            <input id="k" inputmode="numeric" placeholder="Digite a temperatura em Kelvin" name="k"/>
-            <button id="converter">Converter</button>
-            <button id="limpar" aria-label="Limpar campos">Limpar</button>
-        </form>
-        <p>Limpe antes de fazer nova conta</p>
-        <script>
-            const c = document.querySelector("#c")
-            const f = document.querySelector("#f")
-            const k = document.querySelector("#k")
-            const form = document.querySelector("form")
-            const btn = document.querySelector("#converter")
-            const clean = document.querySelector("#limpar")
+        // Função para converter de Kelvin para Celsius e Fahrenheit
+        function convertFromKelvin() {
+            if (k.value === "") {
+                c.value = "";
+                f.value = "";
+                return;
+            }
+            const kelvin = parseFloat(k.value.replace(",", "."));
 
-            // Limpa os campos de entrada
-            clean.addEventListener('click', e=>{
-                e.preventDefault()
-                c.value = ''
-                f.value = ''
-                k.value = ''
-            })
+            if (isNaN(kelvin)) {
+                c.value = "";
+                f.value = "";
+            } else {
+                const kToC = kelvin - 273.15;
+                const kToF = ((kelvin - 273.15) * 9 / 5) + 32;
 
-            // Converte as temperaturas
-            form.addEventListener("submit", e=>{
-                e.preventDefault()
+                c.value = kToC.toLocaleString(languageCode, {
+                    maximumFractionDigits: 2
+                });
+                f.value = kToF.toLocaleString(languageCode, {
+                    maximumFractionDigits: 2
+                });
+            }
+        }
 
-                // Converte Celsius
-                if (f.value == '' && k.value == '') {
-                    cToF = 32+(Number(c.value.replace(",", "."))*9)/5
-                    cToK = Number(c.value.replace(",", ".")) + 273.15
-                    console.log(cToF)
-                    f.value = cToF.toFixed(2).replace(".", ",")
-                    k.value = cToK.toFixed(2).replace(".", ",")
-                    console.log('Valor Celsius')
-                }
-                
-                // Converte Fahrenheit
-                if (c.value == '' && k.value == '') {
-                    fToC = (5*(Number(f.value.replace(",", ".")))-160)/9
-                    fToK = fToC + 273.15
-                    c.value = fToC.toFixed(2).replace(".", ",")
-                    k.value = fToK.toFixed(2).replace(".", ",")
-                    console.log('Valor Fahrenheit')
-                }
 
-                // Converte Kelvin
-                if (f.value == '' && c.value == '') {
-                    kToC = Number(k.value.replace(",", "."))-273.15
-                    kToF = ((9*(Number(k.value.replace(",", ".")))-2458.35)/5)+32
-                    c.value = kToC.toFixed(2).replace(".", ",")
-                    f.value = kToF.toFixed(2).replace(".", ",")       
-                 }
-             })
-        </script>
-    </body>
+        // Limpa os campos de entrada
+        clean.addEventListener('click', (e) => {
+            e.preventDefault();
+            c.value = '';
+            f.value = '';
+            k.value = '';
+        });
+
+        // Adicione ouvintes de eventos para os campos de entrada
+        c.addEventListener('input', convertFromCelsius);
+        f.addEventListener('input', convertFromFahrenheit);
+        k.addEventListener('input', convertFromKelvin);
+    </script>
+     
+</body>
+
 </html>
